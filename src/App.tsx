@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import Confetti from "react-confetti";
 import { useWindowSize } from "react-use";
 
-import clickSound from "./assets/click.mp3";
+import clickSound from "./assets/click.wav";
 import bgMusic from "./assets/birthday.mp3";
 import "./index.css";
 
@@ -33,18 +33,19 @@ export default function App() {
     musicRef.current = music;
 
     // const autoplayTimer = setTimeout(() => {
-    musicOn &&
-      music
-        .play()
-        .then(() => setMusicOn(true))
-        .catch(() => setMusicOn(false));
+
+    music
+      .play()
+      .then(() => setMusicOn(true))
+      .catch(() => setMusicOn(false));
+
     // }, 1000);
 
     // return () => {
     //   music.pause();
     //   clearTimeout(autoplayTimer);
     // };
-  }, [musicOn]);
+  }, []);
 
   const toggleMusic = () => {
     if (musicRef.current) {
@@ -74,6 +75,13 @@ export default function App() {
     setFinalStep(false);
     setWelcome(true);
     setMusicOn(false);
+    if (musicRef.current) {
+      if (musicOn) {
+        musicRef.current.currentTime = 0;
+        musicRef.current.pause();
+        setMusicOn(false);
+      }
+    }
   };
 
   const handleWelcomeEnd = () => {
@@ -84,6 +92,7 @@ export default function App() {
     setTimeout(() => {
       setLoading(false);
       setMusicOn(true);
+      musicRef.current?.play();
     }, 2000); // 2 second loading screen
   };
 
@@ -103,7 +112,7 @@ export default function App() {
       {!welcome && !loading && (
         <button
           onClick={toggleMusic}
-          className="absolute top-4 right-4 text-sm bg-white/30 text-pink-700 px-4 py-2 rounded-full shadow-md hover:bg-white/40 transition-all z-50 backdrop-blur-md">
+          className="absolute top-4 cursor-pointer right-4 text-sm bg-white/30 text-pink-700 px-4 py-2 rounded-full shadow-md hover:bg-white/40 transition-all z-50 backdrop-blur-md">
           {musicOn ? "🔇 Mute Music" : "🔊 Play Music"}
         </button>
       )}
@@ -126,7 +135,7 @@ export default function App() {
               </p>
               <button
                 onClick={handleWelcomeEnd}
-                className="px-6 py-3 rounded-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold shadow-md transition">
+                className="px-6 py-3 cursor-pointer rounded-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold shadow-md transition">
                 Show Me! 💝
               </button>
             </div>
@@ -141,8 +150,8 @@ export default function App() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className=" z-40 fixed inset-0 bg-[url('/wlcm-bg.png')]">
-          <motion.div className=" bg-black/30 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center">
+          className=" z-40 fixed inset-0 bg-[url('/loading-bg.jpeg')] bg-cover bg-center bg-no-repeat">
+          <motion.div className=" bg-black/30 w-full h-full backdrop-blur-[2px] flex flex-col items-center justify-center">
             <div className="text-xl md:text-3xl font-bold text-white animate-pulse [font-family:var(--caveat)]">
               Loading your surprise... 🎁
             </div>
@@ -178,7 +187,7 @@ export default function App() {
 
                   <button
                     onClick={handleNext}
-                    className="mt-6 px-6 py-3 rounded-full bg-pink-500 hover:bg-pink-600 text-white shadow-lg transition-all">
+                    className="mt-6 px-6 py-3 cursor-pointer rounded-full bg-pink-500 hover:bg-pink-600 text-white shadow-lg transition-all">
                     {step === messages.length - 1
                       ? "Final ➡️"
                       : "Next ➡️"}
@@ -195,7 +204,7 @@ export default function App() {
                     with you in it, and today, it pauses to celebrate
                     your magic. 🎉🌟",
                     <br />{" "}
-                    <p className="text-gray-300 animate-pulse pt-3">
+                    <p className="text-gray-100 animate-pulse pt-3">
                       {" "}
                       Tera deewanaa: Nouman Khan{" "}
                     </p>
@@ -207,7 +216,7 @@ export default function App() {
 
                   <button
                     onClick={handleRestart}
-                    className="mt-8 px-6 py-3 rounded-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold shadow-md">
+                    className="mt-8 px-6 py-3 cursor-pointer rounded-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold shadow-md">
                     Restart 🌈
                   </button>
                 </>
