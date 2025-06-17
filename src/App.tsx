@@ -84,7 +84,7 @@ export default function App() {
     setTimeout(() => {
       setLoading(false);
       setMusicOn(true);
-    }, 3000); // 2 second loading screen
+    }, 2000); // 2 second loading screen
   };
 
   return (
@@ -111,7 +111,7 @@ export default function App() {
       {/* 💖 Fullscreen Welcome Page */}
       {welcome && (
         <motion.div
-          className="fixed inset-0 z-50 bg-[url('./wlcm-bg.png')] bg-top-left bg-cover"
+          className="fixed inset-0 z-50 bg-[url('/wlcm-bg.png')] bg-top-left bg-cover"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}>
@@ -141,7 +141,7 @@ export default function App() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className=" z-40 fixed inset-0 bg-[url('./wlcm-bg.png')]">
+          className=" z-40 fixed inset-0 bg-[url('/wlcm-bg.png')]">
           <motion.div className=" bg-black/30 w-full h-full backdrop-blur-sm flex flex-col items-center justify-center">
             <div className="text-xl md:text-3xl font-bold text-white animate-pulse [font-family:var(--caveat)]">
               Loading your surprise... 🎁
@@ -154,7 +154,7 @@ export default function App() {
       {/* 🎂 Main Card (after welcome + loading) */}
 
       {!welcome && !loading && (
-        <div className="fixed inset-0 bg-[url('./bg-3.jpg')] bg-center bg-cover overflow-hidden">
+        <div className="fixed inset-0 bg-[url('/bg-3.jpg')] bg-center bg-cover overflow-hidden">
           <div className="flex items-center justify-center min-h-screen px-2 py-8">
             <div className="bg-white/20 border border-white/30 backdrop-blur-sm p-4 rounded-2xl max-w-xl shadow-2xl text-center">
               <motion.h1
